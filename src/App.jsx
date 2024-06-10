@@ -8,12 +8,15 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+
         const response = await fetch('./db.json')
-        const datos = await response.json()
-        setData(datos.library)
-        console.log(data)
+        const fetchedData = await response.json()
+        setData(fetchedData.library)
+
       } catch (error) {
-        console.error(error, 'Ya la carlitos, amix')
+
+        console.error(error, 'Error trying to fetch data')
+
       }
     }
     fetchData()
@@ -25,7 +28,7 @@ const App = () => {
       {
         data.map((dato, index) => (
           <div key={index}>
-            <p>{ dato.book.title }</p>
+            <p>{dato.book.title}</p>
           </div>
         ))
       }
