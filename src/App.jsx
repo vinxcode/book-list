@@ -1,20 +1,20 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
+import { useStore } from './store/store'
 
 const App = () => {
 
-  const [data, setData] = useState([])
+  const disponibles = useStore((state) => state.disponibles)
+  const fetchDisponibles = useStore((state) => state.fetchDisponibles)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-
         const response = await fetch('./db.json')
         const fetchedData = await response.json()
-        setData(fetchedData.library)
+        fetchDisponibles(fetchedData.library)
 
       } catch (error) {
-
         console.error(error, 'Error trying to fetch data')
 
       }
@@ -25,10 +25,11 @@ const App = () => {
   return (
     <div>
       <h1>Here are some books you can choose</h1>
+
       {
-        data.map((dato, index) => (
+        disponibles.map((disponible, index) => (
           <div key={index}>
-            <p>{dato.book.title}</p>
+            <p>{ disponible.book.title }</p>
           </div>
         ))
       }
