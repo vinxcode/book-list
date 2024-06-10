@@ -8,7 +8,7 @@ const App = () => {
   const disponibles = useStore((state) => state.disponibles)
   const fetchDisponibles = useStore((state) => state.fetchDisponibles)
   const updateDisponibles = useStore((state) => state.updateDisponibles)
-  const updateListaLectura = useStore((state) => state.updateListaLectura)
+  const addBook = useStore((state) => state.addBook)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,13 +26,13 @@ const App = () => {
   }, [])
 
   const handleAdd = (index) => {
-    updateListaLectura(disponibles[index])
+    addBook(disponibles[index])
     updateDisponibles(disponibles.filter(disponible => disponible !== disponibles[index]))
   }
 
   return (
     <div>
-      <h1 className='font-black text-center text-4xl mt-10'>Bookland</h1>
+      <h1 className='font-black text-center text-4xl mt-10'>BOOKLAND</h1>
 
       <ListaLectura/>
 
