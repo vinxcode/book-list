@@ -5,11 +5,9 @@ import ListaLectura from './ListaLectura'
 
 const App = () => {
 
-
   const disponibles = useStore((state) => state.disponibles)
   const fetchDisponibles = useStore((state) => state.fetchDisponibles)
   const updateDisponibles = useStore((state) => state.updateDisponibles)
-  const listaLectura = useStore((state) => state.listaLectura)
   const updateListaLectura = useStore((state) => state.updateListaLectura)
 
   useEffect(() => {
@@ -34,10 +32,12 @@ const App = () => {
 
   return (
     <div>
+      <h1 className='font-black text-center text-4xl mt-10'>Bookland</h1>
 
       <ListaLectura/>
 
-      <h1>Here are some books you can choose</h1>
+      <section className='bg-white m-3 p-4 rounded-xl shadow-xl'>
+      <h1 className='text-center font-bold text-2xl'>Libros disponibles</h1>
       <div className='grid grid-cols-2'>
         {
           disponibles.map((disponible, index) => (
@@ -49,6 +49,7 @@ const App = () => {
           ))
         }
       </div>
+      </section>
 
     </div>
   )
