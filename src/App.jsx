@@ -5,10 +5,10 @@ import ListaLectura from './ListaLectura'
 
 const App = () => {
 
-  const [isListaLectura, setIsListaLectura] = useState(false)
 
   const disponibles = useStore((state) => state.disponibles)
   const fetchDisponibles = useStore((state) => state.fetchDisponibles)
+  const updateDisponibles = useStore((state) => state.updateDisponibles)
   const listaLectura = useStore((state) => state.listaLectura)
   const updateListaLectura = useStore((state) => state.updateListaLectura)
 
@@ -28,8 +28,8 @@ const App = () => {
   }, [])
 
   const handleAdd = (index) => {
-    
     updateListaLectura(disponibles[index])
+    updateDisponibles(disponibles.filter(disponible => disponible !== disponibles[index]))
   }
 
   return (

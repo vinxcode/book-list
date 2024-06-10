@@ -5,5 +5,6 @@ export const useStore = create((set) => ({
     listaLectura: [],
     fetchDisponibles: (newDisponibles) => set((state) => ({ disponibles: newDisponibles })),
     updateListaLectura: (newItem) => set((state) => ({ listaLectura: [...state.listaLectura, newItem]})),
+    updateDisponibles: (newDisponibles) => set((state) => ({ disponibles: newDisponibles })),
 }))
 
