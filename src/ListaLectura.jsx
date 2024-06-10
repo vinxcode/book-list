@@ -1,13 +1,9 @@
 import React from 'react'
-import { useState } from 'react'
 import { useStore } from './store/store'
 
 const ListaLectura = () => {
 
-    const [isListaLectura, setIsListaLectura] = useState(false)
-
     const disponibles = useStore((state) => state.disponibles)
-    const fetchDisponibles = useStore((state) => state.fetchDisponibles)
     const listaLectura = useStore((state) => state.listaLectura)
     const updateListaLectura = useStore((state) => state.updateListaLectura)
     const updateDisponibles = useStore((state) => state.updateDisponibles)
@@ -19,7 +15,7 @@ const ListaLectura = () => {
         updateListaLectura(listaLectura.filter(book => book !== listaLectura[index]))
     }
 
-    return listaLectura &&
+    return (listaLectura.length > 0) &&
         (
             <section className='m-3 p-4 bg-white shadow-lg rounded-xl'>
                 <h2>Lista de lectura</h2>
