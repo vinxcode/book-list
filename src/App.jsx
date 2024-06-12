@@ -9,14 +9,12 @@ const App = () => {
   const [categories, setCategories] = useState([])
   const [areCategories, setAreCategories] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("Todos")
-  const [areBooks, setAreBooks] = useState(false)
 
   const data = useStore((state) => state.data)
   const disponibles = useStore((state) => state.disponibles)
   const listaLectura = useStore((state) => state.listaLectura)
   const fetchDisponibles = useStore((state) => state.fetchDisponibles)
   const updateDisponibles = useStore((state) => state.updateDisponibles)
-  const addBook = useStore((state) => state.addBook)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,17 +47,14 @@ const App = () => {
     const updateAvailableBooks = () => {
       if (selectedCategory === 'Todos') {
         updateDisponibles(data.filter(book => !listaLectura.includes(book)))
+        localStorage.setItem('disponibles', JSON.stringify(data.filter(book => !listaLectura.includes(book))))
       } else {
         updateDisponibles(data.filter(book => book.book.genre === selectedCategory && !listaLectura.includes(book)))
+        localStorage.setItem('disponibles', JSON.stringify(data.filter(book => book.book.genre === selectedCategory && !listaLectura.includes(book))))
       }
     }
     updateAvailableBooks()
   }, [selectedCategory, listaLectura, data, updateDisponibles])
-
-  const handleAdd = (index) => {
-    addBook(disponibles[index])
-    updateDisponibles(disponibles.filter(disponible => disponible !== disponibles[index]))
-  }
 
   const handleSelectChange = (e) => {
     setSelectedCategory(e.target.value)
@@ -67,29 +62,6 @@ const App = () => {
 
   return areCategories ? (
     <div>
-      {/* <div className='flex gap-5 m-3'>
-        <div>
-          <h1 className='font-bold'>DATA</h1>
-          {data.map((book, index) => (
-            <div className='flex gap-2'>
-              <p>{index + 1}</p>
-              <p>{book.book.title}</p>
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <h1 className='font-bold'>DISPONIBLES</h1>
-          {
-            disponibles.map((book, index) => (
-              <div className='flex gap-2'>
-                <p>{index + 1}</p>
-                <p>{book.book.title}</p>
-              </div>
-            ))}
-        </div>
-      </div> */}
-
       <h1 className='font-black text-center text-4xl mt-10'>BOOKLAND</h1>
       <ListaLectura />
 

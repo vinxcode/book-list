@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStore } from './store/store'
+import ListaLectura from './ListaLectura'
+
 
 const Book = () => {
 
     const disponibles = useStore((state) => state.disponibles)
+    const listaLectura = useStore((state) => state.listaLectura)
     const updateDisponibles = useStore((state) => state.updateDisponibles)
     const addBook = useStore((state) => state.addBook)
+
+    useEffect(()=> {
+        localStorage.setItem('listaLectura', JSON.stringify(listaLectura))
+    }, [listaLectura])
 
     const handleAdd = (index) => {
         addBook(disponibles[index])

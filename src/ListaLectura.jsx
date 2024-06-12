@@ -13,6 +13,7 @@ const ListaLectura = () => {
         updateDisponibles(newDisponibles)
         console.log(listaLectura[index])
         updateListaLectura(listaLectura.filter(book => book !== listaLectura[index]))
+        localStorage.setItem('listaLectura', JSON.stringify(listaLectura.filter(book => book !== listaLectura[index])))
     }
 
     return (listaLectura.length > 0) &&
