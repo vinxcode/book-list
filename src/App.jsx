@@ -25,7 +25,6 @@ const App = () => {
         console.error(error, 'Error trying to fetch data')
       }
     }
-
     fetchData()
   }, [])
 
@@ -35,12 +34,12 @@ const App = () => {
         'Todos',
         ...new Set(disponibles.map(book => book.book.genre))
       ]
+      
       setCategories(fetchCategories)
       setAreCategories(true)
     }
-
     fillSelect()
-  }, [categories])
+  }, [disponibles])
 
   const handleAdd = (index) => {
     addBook(disponibles[index])
@@ -51,8 +50,7 @@ const App = () => {
     setSelectedCategory(e.target.value)
 
     if(selectedCategory === 'Todos'){
-      updateDisponibles([])
-      return
+      // Pending logic
     }
 
     const filteredData = disponibles.filter(disponible => disponible.book.genre === selectedGenre)
