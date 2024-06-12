@@ -1,8 +1,15 @@
-# React + Vite
+# Book List
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a project based on a technical frontend assessment. It is made in React with Vite and this litle app has the following features:
 
-Currently, two official plugins are available:
+* Show a list of books availables in the library
+* We can filter the books to find what we're looking for
+* We can add a book to a reading list
+* We can delete a book from the reading list
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project is only for practicing. I wil intend to develop a project like this every week to be prepared for technical interviews and frontend challenges.
+
+### Tech stack
+* React
+* Tailwindcss
+* Zustand
