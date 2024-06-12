@@ -10,6 +10,7 @@ const App = () => {
   const [areCategories, setAreCategories] = useState(false)
   const [selectedCategory, setSelectedCategory] = useState("")
 
+  const data = useStore((state) => state.data)
   const disponibles = useStore((state) => state.disponibles)
   const fetchDisponibles = useStore((state) => state.fetchDisponibles)
   const updateDisponibles = useStore((state) => state.updateDisponibles)
