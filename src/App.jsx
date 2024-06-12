@@ -6,9 +6,9 @@ import Book from './Book'
 
 const App = () => {
 
-
-  const [filtered, setFiltered] = useState([])
-  const [isFetched, setIsFetched] = useState(false)
+  const [categories, setCategories] = useState([])
+  const [areCategories, setAreCategories] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState("")
 
   const disponibles = useStore((state) => state.disponibles)
   const fetchDisponibles = useStore((state) => state.fetchDisponibles)
@@ -21,54 +21,58 @@ const App = () => {
         const response = await fetch('./db.json')
         const fetchedData = await response.json()
         fetchDisponibles(fetchedData.library)
-
       } catch (error) {
         console.error(error, 'Error trying to fetch data')
       }
     }
 
-    const fillSelect = () => {
-      let genres = []
-
-      disponibles.map(book => {
-        genres.push(book.book.genre)
-      })
-
-      let uniqueGenresSet = new Set(genres)
-      let uniqueGenresArray = Array.from(uniqueGenresSet)
-
-      setFiltered(uniqueGenresArray)
-
-
-    }
-
-    if (filtered.length > 0) {
-      setIsFetched(true)
-    }
-    fillSelect()
     fetchData()
-  }, [filtered])
+  }, [])
 
+  useEffect(() => {
+    const fillSelect = () => {
+      const fetchCategories = [
+        'Todos',
+        ...new Set(disponibles.map(book => book.book.genre))
+      ]
+      setCategories(fetchCategories)
+      setAreCategories(true)
+    }
 
-
+    fillSelect()
+  }, [categories])
 
   const handleAdd = (index) => {
     addBook(disponibles[index])
     updateDisponibles(disponibles.filter(disponible => disponible !== disponibles[index]))
   }
 
-  return isFetched ? (
+  const handleSelectChange = (e) => {
+    setSelectedCategory(e.target.value)
+
+    if(selectedCategory === 'Todos'){
+      updateDisponibles([])
+      return
+    }
+
+    const filteredData = disponibles.filter(disponible => disponible.book.genre === selectedGenre)
+    updateDisponibles(filteredData)
+
+  }
+
+  return areCategories ? (
     <div>
       <h1 className='font-black text-center text-4xl mt-10'>BOOKLAND</h1>
       <ListaLectura />
 
       <div className='flex flex-col justify-center items-center'>
         <h3 className='text-center'>Filtrar por genero</h3>
-        <select name="genero" id="genero" className='px-8 py-2 rounded-lg'>
-          <option value="Seleccionar">Seleccionar</option>
+        <select name="genero" id="genero" className='px-8 py-2 rounded-lg'
+          value={selectedCategory}
+          onChange={handleSelectChange}>
           {
-            filtered && filtered.map((book, index) => (
-              <option key={index} value={book}>{book}</option>
+            categories && categories.map((category, index) => (
+              <option key={index} value={category}>{category}</option>
             ))
           }
         </select>
@@ -82,7 +86,6 @@ const App = () => {
   )
     :
     (
-
       <div role="status" className='h-screen w-full flex justify-center items-center'>
         <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -90,7 +93,6 @@ const App = () => {
         </svg>
         <span className="sr-only">Loading...</span>
       </div>
-
     )
 }
 
